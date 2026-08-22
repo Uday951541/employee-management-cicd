@@ -1,4 +1,4 @@
-const API_URL = "http://13.60.244.137:8081/api/employees";
+const API_URL = "http://51.21.128.36:8081/api/employees";
 
 const employeeForm = document.getElementById("employeeForm");
 const employeeTableBody = document.getElementById("employeeTableBody");
