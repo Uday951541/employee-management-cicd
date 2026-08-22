@@ -1,3 +1,6 @@
-FROM nginx:alpine
-COPY . /usr/share/nginx/html
-EXPOSE 80
+  frontend:
+    build: ./backend/frontend
+    ports:
+      - "8082:80"
+    depends_on:
+      - backend
