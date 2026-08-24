@@ -3,7 +3,7 @@ pipeline {
 
     environment {
         DOCKERHUB_CREDS = credentials('dockerhub-creds')
-        DOCKER_REPO = 'yourdockerhubusername'  // <-- change this
+        DOCKER_REPO = 'uday951541'
         IMAGE_TAG = "${env.BUILD_NUMBER}"
     }
 
@@ -39,15 +39,8 @@ pipeline {
 
         stage('Deploy') {
             steps {
-                sh """
-                    docker stop employee-backend || true
-                    docker rm employee-backend || true
-                    docker stop employee-frontend || true
-                    docker rm employee-frontend || true
-
-                    docker run -d --name employee-backend -p 8080:8080 ${DOCKER_REPO}/employee-backend:${IMAGE_TAG}
-                    docker run -d --name employee-frontend -p 8081:80 ${DOCKER_REPO}/employee-frontend:${IMAGE_TAG}
-                """
+                sh 'docker-compose down || true'
+                sh 'docker-compose up -d'
             }
         }
     }
