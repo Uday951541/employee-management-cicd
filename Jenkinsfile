@@ -1,3 +1,4 @@
+```groovy
 pipeline {
     agent any
 
@@ -18,16 +19,26 @@ pipeline {
 
         stage('Check Java and Maven') {
             steps {
-                sh 'java -version'
-                sh 'javac -version'
-                sh 'mvn -version'
+                withEnv([
+                    'JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64',
+                    'PATH=/usr/lib/jvm/java-17-openjdk-amd64/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
+                ]) {
+                    sh 'java -version'
+                    sh 'javac -version'
+                    sh 'mvn -version'
+                }
             }
         }
 
         stage('Build Backend (Maven)') {
             steps {
-                dir('backend/employee-backend') {
-                    sh 'mvn clean package -DskipTests'
+                withEnv([
+                    'JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64',
+                    'PATH=/usr/lib/jvm/java-17-openjdk-amd64/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
+                ]) {
+                    dir('backend/employee-backend') {
+                        sh 'mvn clean package -DskipTests'
+                    }
                 }
             }
         }
@@ -62,3 +73,4 @@ pipeline {
         }
     }
 }
+```
