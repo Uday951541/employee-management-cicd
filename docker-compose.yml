@@ -2,6 +2,7 @@ version: '3.8'
 services:
   mysql:
     image: mysql:8.0
+    command: --innodb-buffer-pool-size=64M --max-connections=20
     environment:
       MYSQL_ROOT_PASSWORD: Uday@1234
       MYSQL_DATABASE: employee_db
@@ -20,7 +21,7 @@ services:
   frontend:
     build: ./backend/frontend
     ports:
-      - "8081:80"
+      - "8082:80"
     depends_on:
       - backend
 
