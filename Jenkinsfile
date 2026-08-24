@@ -8,9 +8,19 @@ pipeline {
     }
 
     stages {
+
         stage('Checkout') {
             steps {
-                git branch: 'main', url: 'https://github.com/Uday951541/employee-management-cicd.git'
+                git branch: 'main',
+                    url: 'https://github.com/Uday951541/employee-management-cicd.git'
+            }
+        }
+
+        stage('Check Java and Maven') {
+            steps {
+                sh 'java -version'
+                sh 'javac -version'
+                sh 'mvn -version'
             }
         }
 
@@ -31,7 +41,8 @@ pipeline {
 
         stage('Push to Docker Hub') {
             steps {
-                sh "echo $DOCKERHUB_CREDS_PSW | docker login -u $DOCKERHUB_CREDS_USR --password-stdin"
+                sh 'echo $DOCKERHUB_CREDS_PSW | docker login -u $DOCKERHUB_CREDS_USR --password-stdin'
+
                 sh "docker push ${DOCKER_REPO}/employee-backend:${IMAGE_TAG}"
                 sh "docker push ${DOCKER_REPO}/employee-frontend:${IMAGE_TAG}"
             }
