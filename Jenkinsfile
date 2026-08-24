@@ -1,4 +1,3 @@
-```groovy
 pipeline {
     agent any
 
@@ -53,7 +52,6 @@ pipeline {
         stage('Push to Docker Hub') {
             steps {
                 sh 'echo $DOCKERHUB_CREDS_PSW | docker login -u $DOCKERHUB_CREDS_USR --password-stdin'
-
                 sh "docker push ${DOCKER_REPO}/employee-backend:${IMAGE_TAG}"
                 sh "docker push ${DOCKER_REPO}/employee-frontend:${IMAGE_TAG}"
             }
@@ -73,4 +71,3 @@ pipeline {
         }
     }
 }
-```
